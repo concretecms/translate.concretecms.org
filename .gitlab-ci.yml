@@ -84,7 +84,7 @@ build:tar:
     # Install production dependencies
     - composer install --no-dev --no-interaction --optimize-autoloader
     # Load in the concrete_cms_auth package
-    - git clone --branch=1.0.1 https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/portlandlabs/addons/concrete_cms_auth.git
+    - git clone --branch=1.0.2 https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/portlandlabs/addons/concrete_cms_auth.git
     - rm -rf public/packages/concrete_cms_auth/.git
   script:
     # Delete anything we don't want to include in the tar

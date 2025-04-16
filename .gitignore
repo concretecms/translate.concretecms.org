@@ -18,3 +18,6 @@
 /build
 /.phpunit.*
 .DS_Store
+
+# Ignore local configuration files
+/public/application/config/local.*.php

@@ -12,17 +12,17 @@ include:
 #  - template: License-Scanning.gitlab-ci.yml
 
 .ssh_key_setup: &ssh_key_setup
-    - composer config gitlab-token.gitlab.com gitlab-ci-token ${CI_JOB_TOKEN}
-    # Adding support for ssh keys in order to download packages from bitbucket.
-    - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
-    - eval $(ssh-agent -s)
-    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
-    - mkdir -p ~/.ssh
-    - chmod 700 ~/.ssh
-    - ssh-keyscan bitbucket.org >> ~/.ssh/known_hosts
-    - chmod 644 ~/.ssh/known_hosts
-    - git config --global user.email "systems@portlandlabs.com"
-    - git config --global user.name "Gitlab CI"
+  - composer config gitlab-token.gitlab.com gitlab-ci-token ${CI_JOB_TOKEN}
+  # Adding support for ssh keys in order to download packages from bitbucket.
+  - "command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )"
+  - eval $(ssh-agent -s)
+  - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+  - mkdir -p ~/.ssh
+  - chmod 700 ~/.ssh
+  - ssh-keyscan bitbucket.org >> ~/.ssh/known_hosts
+  - chmod 644 ~/.ssh/known_hosts
+  - git config --global user.email "systems@portlandlabs.com"
+  - git config --global user.name "Gitlab CI"
 
 # # Test with PHPUnit
 # test:phpunit:
@@ -62,7 +62,7 @@ include:
 #   script:
 #     - >
 #       vendor/bin/phpcs --basepath=.
-#       --report=code --report-junit=junit.xml --report-\\Micheh\\PhpCodeSniffer\\Report\\Gitlab=phpcs-quality-report.json 
+#       --report=code --report-junit=junit.xml --report-\\Micheh\\PhpCodeSniffer\\Report\\Gitlab=phpcs-quality-report.json
 #       phpcs.xml.dist tests public/application
 
 build:tar:
@@ -84,7 +84,7 @@ build:tar:
     # Install production dependencies
     - composer install --no-dev --no-interaction --optimize-autoloader
     # Load in the concrete_cms_auth package
-    - git clone --branch=1.0.2 https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/portlandlabs/addons/concrete_cms_auth.git
+    - git clone --branch=1.0.4 https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/portlandlabs/addons/concrete_cms_auth.git
     - rm -rf public/packages/concrete_cms_auth/.git
   script:
     # Delete anything we don't want to include in the tar
